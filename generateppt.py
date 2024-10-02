@@ -1,4 +1,4 @@
-import streamlit_app as st
+import streamlit as st
 
 def show_ppt():
     st.title("PowerPoint Outline")
