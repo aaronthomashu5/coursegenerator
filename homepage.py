@@ -5,7 +5,6 @@ import google.generativeai as genai
 from result import show_result
 
 
-genai.configure(api_key='GOOGLE_GENAI_API_KEY')
 
 def show_homepage():
     st.title("Course Creator")

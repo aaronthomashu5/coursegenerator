@@ -10,7 +10,6 @@ genai.configure(api_key=GOOGLE_GENAI_API_KEY)
 # Sarvam API configuration
 SARVAM_TRANSLATE_URL = "https://api.sarvam.ai/translate"
 SARVAM_TTS_URL = "https://api.sarvam.ai/text-to-speech"
-SARVAM_API_KEY = "SARVAM_KEY"
 
 LANGUAGE_CODES = {
     "Hindi": "hi-IN",
@@ -40,7 +39,7 @@ def translate_text(text, target_language_code):
         "model": "mayura:v1",
         "enable_preprocessing": True
     }
-    headers = {"Content-Type": "application/json", "api-subscription-key": SARVAM_API_KEY}
+    headers = {"Content-Type": "application/json", "api-subscription-key": SARVAM_KEY}
     response = requests.post(SARVAM_TRANSLATE_URL, json=payload, headers=headers)
     return response.text
 
@@ -51,7 +50,7 @@ def text_to_speech(text, target_language_code):
         "speaker": "arvind"
     }
     headers = {
-        "api-subscription-key": SARVAM_API_KEY,
+        "api-subscription-key": SARVAM_KEY,
         "Content-Type": "application/json"
     }
     response = requests.post(SARVAM_TTS_URL, json=payload, headers=headers)
