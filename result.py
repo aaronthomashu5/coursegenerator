@@ -5,7 +5,7 @@ import re
 
 GOOGLE_GENAI_API_KEY= st.secrets["GOOGLE_API_KEY"]
 SARVAM_KEY = st.secrets["SARVAM_API_KEY"]
-genai.configure(api_key='GOOGLE_GENAI_API_KEY')
+genai.configure(api_key=GOOGLE_GENAI_API_KEY)
 
 # Sarvam API configuration
 SARVAM_TRANSLATE_URL = "https://api.sarvam.ai/translate"
