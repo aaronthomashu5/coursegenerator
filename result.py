@@ -57,17 +57,12 @@ def text_to_speech(text, target_language_code):
         "Content-Type": "application/json"
     }
     response = requests.post(SARVAM_TTS_URL, json=payload, headers=headers)
-    audiotxt = response.text
-    # print("API Response:", audiotxt)
-    audio_json = json.loads(audiotxt)
-
+    audio_json = json.loads(response.text)
     audio_data_base64 = audio_json["audios"][0]
-    binary_data = base64.b64decode(audio_data_base64)
-    with open(output_file_path, 'wb') as mp3_file:
-        mp3_file.write(binary_data)
-    # print(f"MP3 file saved successfully at {output_file_path}")
+    audio_bytes = base64.b64decode(audio_data_base64)
+    return audio_bytes
 
-    return output_file_path
+
 
 def show_result():
     st.title("Generated Course Content")
@@ -150,12 +145,12 @@ def show_result():
 
     if st.session_state.tts_option == "Yes":
         target_language_code = LANGUAGE_CODES[st.session_state.language]
-        with st.spinner("Translating and generating audio..."):
+        with st.spinner("Generating audio..."):
             translated_text = translate_text(transcript_text_body, target_language_code)
-            audio_content = text_to_speech(transcript_text_body, target_language_code)
+            audio_bytes = text_to_speech(transcript_text_body, target_language_code)
             
         st.subheader(f"Translated Transcript ({st.session_state.language})")
-        # st.write(translated_text)
+        st.write(translated_text)
         
         st.subheader("Audio Version")
-        st.audio(audio_content, format="audio/mp3")
+        st.audio(audio_bytes, format="audio/mp3")
