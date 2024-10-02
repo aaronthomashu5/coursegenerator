@@ -50,7 +50,7 @@ def text_to_speech(text, target_language_code):
     payload = {
         "inputs": [text],
         "target_language_code": target_language_code,
-        "speaker": "arvind"
+        "speaker": "meera"
     }
     headers = {
         "api-subscription-key": SARVAM_KEY,
