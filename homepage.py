@@ -1,6 +1,6 @@
 
 
-import streamlit as st
+import streamlit_app as st
 import google.generativeai as genai
 from result import show_result
 

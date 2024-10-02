@@ -1,4 +1,4 @@
-import streamlit as st
+import streamlit_app as st
 from homepage import show_homepage
 from result import show_result
 from generateppt import show_ppt
