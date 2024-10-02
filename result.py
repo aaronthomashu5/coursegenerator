@@ -2,6 +2,8 @@ import streamlit as st
 import google.generativeai as genai
 import requests
 import re
+import base64
+import json
 
 GOOGLE_GENAI_API_KEY= st.secrets["GOOGLE_API_KEY"]
 SARVAM_KEY = st.secrets["SARVAM_API_KEY"]
@@ -44,6 +46,7 @@ def translate_text(text, target_language_code):
     return response.text
 
 def text_to_speech(text, target_language_code):
+    output_file_path = "output_audio.mp3"
     payload = {
         "inputs": [text],
         "target_language_code": target_language_code,
@@ -54,7 +57,17 @@ def text_to_speech(text, target_language_code):
         "Content-Type": "application/json"
     }
     response = requests.post(SARVAM_TTS_URL, json=payload, headers=headers)
-    return response.content
+    audiotxt = response.text
+    # print("API Response:", audiotxt)
+    audio_json = json.loads(audiotxt)
+
+    audio_data_base64 = audio_json["audios"][0]
+    binary_data = base64.b64decode(audio_data_base64)
+    with open(output_file_path, 'wb') as mp3_file:
+        mp3_file.write(binary_data)
+    # print(f"MP3 file saved successfully at {output_file_path}")
+
+    return output_file_path
 
 def show_result():
     st.title("Generated Course Content")
@@ -68,10 +81,11 @@ def show_result():
     prompt = f"""
     Create a comprehensive course plan based on the following details:
     {course_data}
-    
+    give only the mentioned prompt's response. don't respond with messages which is not asked for eg"ppt generation is not possible"
+    give response only for the input topic, dont respond out of topic if the input prompt isnt logical then dont mention it. 
     Provide the following:
     {"1. An outline for PowerPoint slides" if st.session_state.generate_ppt else ""}
-    2. A transcript for the course instructor
+    2. A transcript for the course instructor, this transcript helps instructor to give as an intro keep it simple keep it as short as possible
     3. Guidelines for the best course design and timeline
     {"4. A question bank" if st.session_state.generate_question_bank else ""}
     {"5. MCQs" if st.session_state.generate_mcq else ""}
@@ -138,11 +152,10 @@ def show_result():
         target_language_code = LANGUAGE_CODES[st.session_state.language]
         with st.spinner("Translating and generating audio..."):
             translated_text = translate_text(transcript_text_body, target_language_code)
-            audio_content = text_to_speech(translated_text, target_language_code)
-        
+            audio_content = text_to_speech(transcript_text_body, target_language_code)
+            
         st.subheader(f"Translated Transcript ({st.session_state.language})")
-        st.write(translated_text)
+        # st.write(translated_text)
         
         st.subheader("Audio Version")
         st.audio(audio_content, format="audio/mp3")
-        # print(translated_text)
