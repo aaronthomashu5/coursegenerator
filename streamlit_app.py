@@ -2,19 +2,19 @@ import streamlit as st
 from homepage import show_homepage
 from result import show_result
 from generateppt import show_ppt
-# import streamlit as st
-# import google.generativeai as genai
-
 
 st.set_page_config(page_title="Course Creator", page_icon="📚")
 
-# Define pages
-home_page = st.Page(show_homepage, title="Home", icon="🏠")
-result_page = st.Page(show_result, title="Result", icon="📊")
-ppt_page = st.Page(show_ppt, title="Generate PPT", icon="📝")
+# Initialize session state
+if 'current_page' not in st.session_state:
+    st.session_state.current_page = "home"
 
-# Navigation
-page = st.navigation([ home_page, result_page, ppt_page], position="hidden")
+# Define page functions
+pages = {
+    "home": show_homepage,
+    "result": show_result,
+    "ppt": show_ppt
+}
 
-# Run the selected page
-page.run()
+# Display the current page
+pages[st.session_state.current_page]()

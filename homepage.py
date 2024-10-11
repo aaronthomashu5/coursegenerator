@@ -1,10 +1,4 @@
-
-
 import streamlit as st
-import google.generativeai as genai
-from result import show_result
-
-
 
 def show_homepage():
     st.title("Course Creator")
@@ -14,7 +8,7 @@ def show_homepage():
         course_objective = st.text_area("Course Objective")
         age_group = st.selectbox("Select the age group", ["Children (5-12 years)", "Teens (13-18 years)", "Young Adults (19-25 years)", "Adults (26-40 years)", "Mature Learners (40+ years)"])
         skill_level = st.selectbox("Select the skill level of the audience", ["Beginner", "Intermediate", "Advanced"])
-        language = st.selectbox("Select the primary language", ["Hindi", "Bengali", "Kannada", "Malayalam", "Marathi", "Odia", "Punjabi", "Tamil", "Telugu", "Gujarati"])
+        language = st.selectbox("Select the primary language", ["English","Hindi", "Bengali", "Kannada", "Malayalam", "Marathi", "Odia", "Punjabi", "Tamil", "Telugu", "Gujarati"])
         tts_option = st.radio("Do you want Text-to-Speech for this language?", ("Yes", "No"))
         week_days = st.multiselect("Select the days of the week for the course", ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"])
         course_time = st.time_input("Select the course timing")
@@ -55,10 +49,5 @@ def show_homepage():
         st.session_state.generate_assignments = generate_assignments
         st.session_state.language = language
         st.session_state.tts_option = tts_option
-        result_page = st.Page(show_result, title="Result", icon="📊")
-    
-        page = st.navigation([ result_page], position="hidden")
-
-        page.run()
-
-        # st.switch_page("result")
+        st.session_state.current_page = "result"
+        st.rerun()
