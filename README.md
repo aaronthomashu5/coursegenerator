@@ -55,6 +55,9 @@ The solution is built on **Streamlit**, leveraging **Generative AI** through **G
 2. **Custom Course Design** 🎓
    - Flexible structure and format for tailored learning experiences.
 
+3. **AI-Generated Course Content** 🧑‍🏫
+ - Automatically generated PPT slides, instructor guides, assignments.
+
 ---
 
 ## 🚫 What's Out of Scope?
@@ -64,9 +67,6 @@ The solution is built on **Streamlit**, leveraging **Generative AI** through **G
    
 2. **Assessment Grading**:
    - Although the tool generates assessments, it does not automatically grade or analyze student performance.
-
-3. **AI-Generated Course Content** 🧑‍🏫
-   - Automatically generated PPT slides, instructor guides, assignments, and more(working on it).
 ---
 
 ## 🔮 Future Opportunities
