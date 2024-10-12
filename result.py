@@ -162,4 +162,3 @@ minimum slides 10
         st.session_state.current_page = "ppt"
         st.rerun()
 
-    # Add other buttons for MCQ, question bank, and assignments if needed
